@@ -1,0 +1,21 @@
+{
+  "name": "shaikhfaisal/package_name",
+  "description": "checklist app",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Faisal Shaikh",
+      "email": "fss.fss@gmail.com"
+    }
+  ],
+  "require": {
+    "behat/behat": "v3.1.0",
+    "phpunit/phpunit": "4.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "FS\\": "src/FS"
+    }
+  }
+}
