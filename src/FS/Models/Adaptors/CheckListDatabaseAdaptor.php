@@ -8,7 +8,7 @@ use FS\Models\StandardModel;
  * Class CheckListAdaptor
  * @package FS\Models\Adaptors
  */
-class CheckListAdaptor implements DB_Adaptor
+class CheckListDatabaseAdaptor implements StorageAdaptor
 {
 
     /**

@@ -2,7 +2,7 @@
 
 namespace FS\Models;
 
-use FS\Models\Adaptors\DB_Adaptor;
+use FS\Models\Adaptors\StorageAdaptor;
 
 /**
  * Interface StandardModel
@@ -13,9 +13,9 @@ interface StandardModel
     /**
      * StandardModel constructor.
      *
-     * @param DB_Adaptor $db_adaptor
+     * @param StorageAdaptor $db_adaptor
      */
-    public function __construct(DB_Adaptor $db_adaptor);
+    public function __construct(StorageAdaptor $db_adaptor);
 
     /**
      * @return mixed

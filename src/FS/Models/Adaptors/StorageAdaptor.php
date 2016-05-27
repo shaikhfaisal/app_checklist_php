@@ -7,7 +7,7 @@ use FS\Models\StandardModel;
  * Interface DB_Adaptor
  * @package FS\Models\Adaptors
  */
-interface DB_Adaptor
+interface StorageAdaptor
 {
     /**
      * @param StandardModel $model

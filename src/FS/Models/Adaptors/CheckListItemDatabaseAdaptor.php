@@ -8,7 +8,7 @@ use FS\Models\StandardModel;
  * Class CheckListItemAdaptor
  * @package FS\Models\Adaptors
  */
-class CheckListItemAdaptor implements DB_Adaptor
+class CheckListItemDatabaseAdaptor implements StorageAdaptor
 {
     /**
      * @type object \PDO

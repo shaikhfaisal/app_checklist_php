@@ -3,9 +3,9 @@
 namespace FS\Services;
 
 use FS\Models\CheckList;
-use FS\Models\Adaptors\CheckListAdaptor as CheckListAdaptor;
+use FS\Models\Adaptors\CheckListDatabaseAdaptor;
 use FS\Models\CheckListItem;
-use FS\Models\Adaptors\CheckListItemAdaptor;
+use FS\Models\Adaptors\CheckListItemDatabaseAdaptor;
 
 /**
  * Class CheckListService
@@ -21,7 +21,7 @@ class CheckListService
      */
     public function createList($list_name)
     {
-        $list = new CheckList(new CheckListAdaptor());
+        $list = new CheckList(new CheckListDatabaseAdaptor());
         $list->setName($list_name)
             ->save();
     }
@@ -34,7 +34,7 @@ class CheckListService
      */
     public function addItemToList($list_id, $item_name)
     {
-        $list_item = new CheckListItem(new CheckListItemAdaptor());
+        $list_item = new CheckListItem(new CheckListItemDatabaseAdaptor());
         $list_item->setName($item_name)
             ->setListId($list_id)
             ->save();
