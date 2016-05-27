@@ -1,26 +1,36 @@
 <?php
 namespace FS\Models;
 
-use FS\Models\Adaptors\CheckList as DatabaseAdaptor;
+use FS\Models\Adaptors\DB_Adaptor;
 
-
-class CheckList
+/**
+ * Class CheckList
+ * @package FS\Models
+ */
+class CheckList implements StandardModel
 {
+    /**
+     * @var string Name of the checklist
+     */
     private $name;
 
+    /**
+     * @var object DatabaseAdaptor
+     */
     private $db_adaptor;
 
     /**
      * CheckList constructor.
-     * @param $name
+     *
+     * @param DB_Adaptor $db_adaptor
      */
-    public function __construct(DatabaseAdaptor $db_adaptor)
+    public function __construct(DB_Adaptor $db_adaptor)
     {
         $this->db_adaptor = $db_adaptor;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -28,8 +38,8 @@ class CheckList
     }
 
     /**
-     * @param mixed $name
-     * @return CheckList
+     * @param string $name
+     * @return object CheckList
      */
     public function setName($name)
     {
@@ -37,9 +47,12 @@ class CheckList
         return $this;
     }
 
+    /**
+     * Requests the db_adaptor to save the model.
+     */
     public function save()
     {
-        $this->db_adaptor->saveToDB($this);
+        $this->db_adaptor->saveToStorage($this);
     }
 
 

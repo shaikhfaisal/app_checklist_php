@@ -2,14 +2,16 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use FS\Models\CheckList;
-use FS\Models\Adaptors\CheckList as CheckListAdaptor;
+use FS\Services\CheckListService;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context, SnippetAcceptingContext
 {
+    /**
+     * @var object PDO
+     */
     protected $dsn;
 
     /**
@@ -26,19 +28,34 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
 
     /**
-     * @Given I have a list called :arg1
+     * @Given I have a list called :list_name
      */
     public function iHaveAListCalled($list_name)
     {
-        $list = new Checklist(new CheckListAdaptor());
-        $list->setName($list_name)->save();
+        $service = new CheckListService();
+        $service->createList($list_name);
+    }
+
+    /**
+     * @Given I add :list_item_name to :list_name list
+     */
+    public function iAddToList($list_item_name, $list_name)
+    {
+
+        $list_id = $this->getIdOfList($list_name);
+
+        $service = new CheckListService();
+        $service->addItemToList($list_id, $list_item_name);
 
     }
 
     /**
-     * @Given I add :arg1 to :arg2 list
+     * Returns the id of a list identified by a name
+     *
+     * @param $list_name
+     * @return integer
      */
-    public function iAddToList($list_item_name, $list_name)
+    private function getIdOfList($list_name)
     {
         $sth = $this->dsn->prepare("SELECT id from lists where name=:name");
         $sth->execute(
@@ -47,15 +64,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
             ]
         );
         $result = $sth->fetch(PDO::FETCH_ASSOC);
-        $list_id = $result["id"];
-
-        $sth = $this->dsn->prepare("INSERT INTO list_items (list_id, name) VALUES (:list_id, :list_item_name)");
-        $sth->execute(
-            [
-                ":list_id" => $list_id,
-                ":list_item_name" => $list_item_name
-            ]
-        );
+        return $result["id"];
     }
 
     /**
@@ -63,14 +72,8 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function iShouldHaveItemsInTheList($no_of_items, $list_name)
     {
-        $sth = $this->dsn->prepare("SELECT id from lists where name=:name");
-        $sth->execute(
-            [
-                ":name" => $list_name,
-            ]
-        );
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-        $list_id = $result["id"];
+
+        $list_id = $this->getIdOfList($list_name);
 
         $sth = $this->dsn->prepare("SELECT count(1) from list_items where list_id=:list_id");
         $sth->execute(
@@ -84,7 +87,5 @@ class FeatureContext implements Context, SnippetAcceptingContext
         assert($count == $no_of_items);
 
     }
-
-
 
 }

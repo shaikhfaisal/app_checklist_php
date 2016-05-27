@@ -1,11 +1,17 @@
 <?php
-
 namespace FS\Models\Adaptors;
 
+use FS\Models\StandardModel;
 
-use FS\Models\CheckList as CheckListModel;
-
+/**
+ * Interface DB_Adaptor
+ * @package FS\Models\Adaptors
+ */
 interface DB_Adaptor
 {
-    public function saveToDB(CheckListModel $model);
+    /**
+     * @param StandardModel $model
+     * @return mixed
+     */
+    public function saveToStorage(StandardModel $model);
 }
