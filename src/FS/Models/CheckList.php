@@ -1,7 +1,7 @@
 <?php
 namespace FS\Models;
 
-use FS\Models\Adaptors\StorageAdaptor;
+use FS\StorageAdaptors\StorageAdaptor;
 
 /**
  * Class CheckList

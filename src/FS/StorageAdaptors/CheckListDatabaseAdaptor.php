@@ -1,6 +1,6 @@
 <?php
 
-namespace FS\Models\Adaptors;
+namespace FS\StorageAdaptors;
 
 use FS\Models\CheckList;
 use FS\Models\CheckListItem;
@@ -8,7 +8,7 @@ use FS\Models\StandardModel;
 
 /**
  * Class CheckListAdaptor
- * @package FS\Models\Adaptors
+ * @package FS\StorageAdaptors
  */
 class CheckListDatabaseAdaptor implements StorageAdaptor
 {

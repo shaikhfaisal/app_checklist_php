@@ -3,9 +3,9 @@
 namespace FS\Services;
 
 use FS\Models\CheckList;
-use FS\Models\Adaptors\CheckListDatabaseAdaptor;
+use FS\StorageAdaptors\CheckListDatabaseAdaptor;
 use FS\Models\CheckListItem;
-use FS\Models\Adaptors\CheckListItemDatabaseAdaptor;
+use FS\StorageAdaptors\CheckListItemDatabaseAdaptor;
 
 /**
  * Class CheckListService

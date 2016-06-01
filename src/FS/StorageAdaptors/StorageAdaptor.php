@@ -1,11 +1,11 @@
 <?php
-namespace FS\Models\Adaptors;
+namespace FS\StorageAdaptors;
 
 use FS\Models\StandardModel;
 
 /**
  * Interface DB_Adaptor
- * @package FS\Models\Adaptors
+ * @package FS\StorageAdaptors
  */
 interface StorageAdaptor
 {

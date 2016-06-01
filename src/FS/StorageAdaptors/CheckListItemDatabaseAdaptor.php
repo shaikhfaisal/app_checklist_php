@@ -1,12 +1,12 @@
 <?php
 
-namespace FS\Models\Adaptors;
+namespace FS\StorageAdaptors;
 
 use FS\Models\StandardModel;
 
 /**
  * Class CheckListItemAdaptor
- * @package FS\Models\Adaptors
+ * @package FS\StorageAdaptors
  */
 class CheckListItemDatabaseAdaptor implements StorageAdaptor
 {
