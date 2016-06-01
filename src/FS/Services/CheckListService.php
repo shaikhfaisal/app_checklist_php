@@ -21,7 +21,7 @@ class CheckListService
      */
     public function createList($list_name)
     {
-        $list = new CheckList(new CheckListDatabaseAdaptor());
+        $list = new CheckList(null, new CheckListDatabaseAdaptor());
         $list->setName($list_name)
             ->save();
     }
@@ -34,9 +34,10 @@ class CheckListService
      */
     public function addItemToList($list_id, $item_name)
     {
-        $list_item = new CheckListItem(new CheckListItemDatabaseAdaptor());
-        $list_item->setName($item_name)
-            ->setListId($list_id)
-            ->save();
+        $list = new CheckList($list_id, new CheckListDatabaseAdaptor());
+        $list_item = new CheckListItem(null, new CheckListItemDatabaseAdaptor());
+
+        $list->addCheckListItem($list_item);
+
     }
 }

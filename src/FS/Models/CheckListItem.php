@@ -4,6 +4,10 @@ namespace FS\Models;
 
 use FS\Models\Adaptors\StorageAdaptor;
 
+/**
+ * Class CheckListItem
+ * @package FS\Models
+ */
 class CheckListItem implements StandardModel
 {
     /**
@@ -25,9 +29,26 @@ class CheckListItem implements StandardModel
      * CheckListItem constructor.
      * @param StorageAdaptor $db_adaptor
      */
-    public function __construct(StorageAdaptor $db_adaptor)
+    public function __construct($id = null, StorageAdaptor $db_adaptor)
     {
         $this->db_adaptor = $db_adaptor;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
