@@ -38,7 +38,7 @@ class CheckListService
         $list_item = new CheckListItem(null, new CheckListItemDatabaseAdaptor());
         $list_item->setName($item_name);
 
-        $list->addCheckListItem($list_item);
+        $list->addCheckListItem($list_item, true);
 
     }
 }

@@ -64,6 +64,25 @@ class CheckListDatabaseAdaptor implements StorageAdaptor
         $list->setId($result["id"]);
         $list->setName($result["name"]);
 
+        $sth = $this->dsn->prepare("SELECT id, name from list_items where list_id=:list_id");
+        $sth->execute(
+            [
+                ":list_id" => $list_id,
+            ]
+        );
+
+        while ($result = $sth->fetch(\PDO::FETCH_ASSOC)) {
+
+            $list_item = new CheckListItem(null, new CheckListItemDatabaseAdaptor);
+            $list_item->setId($result["id"]);
+            $list_item->setName($result["name"]);
+
+            $list->addCheckListItem($list_item, false);
+
+        }
+
+        return $this;
+
 
     }
 

@@ -23,6 +23,11 @@ class CheckList implements StandardModel
     private $db_adaptor;
 
     /**
+     * @type array
+     */
+    private $list_items;
+
+    /**
      * CheckList constructor.
      *
      * @param StorageAdaptor $db_adaptor
@@ -78,11 +83,17 @@ class CheckList implements StandardModel
         $this->db_adaptor->saveToStorage($this);
     }
 
-    public function addCheckListItem(CheckListItem $list_item)
+    /**
+     * @param CheckListItem $list_item
+     */
+    public function addCheckListItem(CheckListItem $list_item, $persist_to_db = false)
     {
         $this->list_items[] = $list_item;
 
-        $this->db_adaptor->addCheckListItem($this, $list_item);
+        if ($persist_to_db) {
+            $this->db_adaptor->addCheckListItem($this, $list_item);
+        }
+
     }
 
 
