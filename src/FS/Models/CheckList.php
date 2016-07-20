@@ -18,7 +18,7 @@ class CheckList implements StandardModel
      */
     private $name;
     /**
-     * @var object DatabaseAdaptor
+     * @var object
      */
     private $db_adaptor;
 
@@ -88,12 +88,34 @@ class CheckList implements StandardModel
      */
     public function addCheckListItem(CheckListItem $list_item, $persist_to_db = false)
     {
-        $this->list_items[] = $list_item;
+        $this->list_items[$list_item->getId()] = $list_item;
 
         if ($persist_to_db) {
             $this->db_adaptor->addCheckListItem($this, $list_item);
         }
 
+    }
+
+    public function removeListItem($item_name)
+    {
+        /** @object  $list_item CheckListItem*/
+        foreach ($this->getListItems() as $list_item) {
+            if ($item_name == $list_item->getName()) {
+                print "Removing ".$list_item->getName().PHP_EOL;
+                unset($this->list_items[$list_item->getId()]);
+                $this->db_adaptor->removeCheckListItem($this, $list_item);
+                break;
+            }
+        }
+
+    }
+
+    /**
+     * @return array CheckListItem
+     */
+    public function getListItems()
+    {
+        return $this->list_items;
     }
 
 

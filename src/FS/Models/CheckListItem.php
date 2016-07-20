@@ -15,6 +15,12 @@ class CheckListItem implements StandardModel
      */
     private $db_adaptor;
 
+
+    /**
+     * @type integer
+     */
+    private $id;
+
     /**
      * @var integer
      */
@@ -33,6 +39,9 @@ class CheckListItem implements StandardModel
     {
         $this->db_adaptor = $db_adaptor;
 
+        if (!is_null($id) && !empty($id)) {
+            $this->db_adaptor->hydrate($id, $this);
+        }
     }
 
     /**

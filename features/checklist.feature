@@ -24,12 +24,13 @@ Feature: Lists
 #    Then I should have 0  items in the "A large list" list
 #
 #
-#  Scenario: Deleting items from a list
-#  As a user
-#    Given I have a list called "A large list"
-#    And I add "Add one glass milk" to "Making chocalate-milk-dahi" list
-#    And I add "Add one teaspoon cocoa powder" to "Making chocalate-milk-dahi" list
-#    And I add "Add one teaspoon honey" to "Making chocalate-milk-dahi" list
-#    And I add "Heat in saucepan for 2 mins" to "Making chocalate-milk-dahi" list
-#    And I remove an item "Add one teaspoon honey" from the "A large list" list
-#    Then I should have 3 items in the "A large list" list
+  Scenario: Deleting items from a list
+  As a user
+    Given I have a list called "A large list"
+    And I add "a" to "A large list" list
+    And I add "b" to "A large list" list
+    And I add "c" to "A large list" list
+    And I add "d" to "A large list" list
+    And I remove an item "c" from the "A large list" list
+    Then I should have 3 items in the "A large list" list
+#    And I should not have "c" in the "A large list" list

@@ -88,4 +88,40 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
     }
 
+
+    /**
+     * @Given I remove an item :item_name from the :list_name list
+     */
+    public function iRemoveAnItemFromTheList($item_name, $list_name)
+    {
+        $list_id = $this->getIdOfList($list_name);
+
+        $service = new CheckListService();
+        $service->removeItemFromList($list_id, $item_name);
+
+    }
+
+    /**
+     * @Then I should not have :arg1 in the :arg2 list
+     */
+    public function iShouldNotHaveInTheList($item_name, $list_name)
+    {
+
+        $list_id = $this->getIdOfList($list_name);
+
+        $sth = $this->dsn->prepare("SELECT count(1) from list_items where list_id=:list_id AND name=:item_name");
+        $sth->execute(
+            [
+                ":list_id" => $list_id,
+                ":item_name" => $item_name,
+            ]
+        );
+
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        $count = $result["count"];
+
+        assert($count == 0);
+
+    }
+
 }

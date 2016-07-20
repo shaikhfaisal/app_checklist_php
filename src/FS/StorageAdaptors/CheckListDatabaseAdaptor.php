@@ -103,4 +103,14 @@ class CheckListDatabaseAdaptor implements StorageAdaptor
         );
 
     }
+
+    public function removeCheckListItem(CheckList $item, CheckListItem $list_item)
+    {
+        $sth = $this->dsn->prepare("DELETE FROM list_items WHERE id = :list_item_id");
+        $sth->execute(
+            [
+                ":list_item_id" => $list_item->getId(),
+            ]
+        );
+    }
 }

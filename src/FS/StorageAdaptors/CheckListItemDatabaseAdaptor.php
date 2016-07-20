@@ -2,6 +2,7 @@
 
 namespace FS\StorageAdaptors;
 
+use FS\Models\CheckListItem;
 use FS\Models\StandardModel;
 
 /**
@@ -22,6 +23,31 @@ class CheckListItemDatabaseAdaptor implements StorageAdaptor
     {
         $this->dsn = new \PDO("pgsql:dbname=checklists;host=127.0.0.1", "checklists", "checklists");
     }
+
+    /**
+     * Hydrates a model object from the database.
+     *
+     * @param $list_id
+     * @param CheckList $list
+     */
+    public function hydrate($list_item_id, CheckListItem $list_item)
+    {
+        $sth = $this->dsn->prepare("SELECT id, name from list_items where id=:list_item_id");
+        $sth->execute(
+            [
+                ":list_item_id" => $list_item_id,
+            ]
+        );
+
+        $result = $sth->fetch(\PDO::FETCH_ASSOC);
+
+        $list_item->setId($result["id"]);
+        $list_item->setName($result["name"]);
+
+        return $this;
+
+    }
+
 
     /**
      * Saves the model to storage

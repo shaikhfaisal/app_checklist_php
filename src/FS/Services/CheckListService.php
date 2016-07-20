@@ -41,4 +41,10 @@ class CheckListService
         $list->addCheckListItem($list_item, true);
 
     }
+
+    public function removeItemFromList($list_id, $item_name)
+    {
+        $list = new CheckList($list_id, new CheckListDatabaseAdaptor());
+        $list->removeListItem($item_name);
+    }
 }
