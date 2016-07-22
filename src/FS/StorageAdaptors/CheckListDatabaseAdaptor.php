@@ -10,7 +10,7 @@ use FS\Models\StandardModel;
  * Class CheckListAdaptor
  * @package FS\StorageAdaptors
  */
-class CheckListDatabaseAdaptor implements StorageAdaptor
+class CheckListDatabaseAdaptor
 {
 
     /**
@@ -32,7 +32,7 @@ class CheckListDatabaseAdaptor implements StorageAdaptor
      * @param StandardModel $checklist_model
      * @return null
      */
-    public function saveToStorage(StandardModel $checklist_model)
+    public function create(CheckList $checklist_model)
     {
 
         $sth = $this->dsn->prepare("INSERT INTO lists (name) VALUES (:name)");
@@ -80,9 +80,6 @@ class CheckListDatabaseAdaptor implements StorageAdaptor
             $list->addCheckListItem($list_item, false);
 
         }
-
-        return $this;
-
 
     }
 

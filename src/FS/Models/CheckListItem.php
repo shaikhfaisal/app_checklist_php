@@ -2,6 +2,7 @@
 namespace FS\Models;
 
 
+use FS\StorageAdaptors\CheckListItemDatabaseAdaptor;
 use FS\StorageAdaptors\StorageAdaptor;
 
 /**
@@ -35,7 +36,7 @@ class CheckListItem implements StandardModel
      * CheckListItem constructor.
      * @param StorageAdaptor $db_adaptor
      */
-    public function __construct($id = null, StorageAdaptor $db_adaptor)
+    public function __construct($id = null, CheckListItemDatabaseAdaptor $db_adaptor)
     {
         $this->db_adaptor = $db_adaptor;
 

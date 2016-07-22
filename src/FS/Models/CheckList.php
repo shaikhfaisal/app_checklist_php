@@ -1,6 +1,7 @@
 <?php
 namespace FS\Models;
 
+use FS\StorageAdaptors\CheckListDatabaseAdaptor;
 use FS\StorageAdaptors\StorageAdaptor;
 
 /**
@@ -32,7 +33,7 @@ class CheckList implements StandardModel
      *
      * @param StorageAdaptor $db_adaptor
      */
-    public function __construct($list_id = null, StorageAdaptor $db_adaptor)
+    public function __construct($list_id = null, CheckListDatabaseAdaptor $db_adaptor)
     {
         $this->db_adaptor = $db_adaptor;
 
@@ -80,7 +81,7 @@ class CheckList implements StandardModel
      */
     public function save()
     {
-        $this->db_adaptor->saveToStorage($this);
+        $this->db_adaptor->create($this);
     }
 
     /**

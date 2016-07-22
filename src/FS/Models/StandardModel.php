@@ -11,13 +11,6 @@ use FS\StorageAdaptors\StorageAdaptor;
 interface StandardModel
 {
     /**
-     * StandardModel constructor.
-     *
-     * @param StorageAdaptor $db_adaptor
-     */
-    public function __construct($id = null, StorageAdaptor $db_adaptor);
-
-    /**
      * @return mixed
      */
     public function save();

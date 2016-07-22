@@ -2,6 +2,7 @@
 
 namespace FS\StorageAdaptors;
 
+use FS\Models\CheckList;
 use FS\Models\CheckListItem;
 use FS\Models\StandardModel;
 
@@ -9,7 +10,7 @@ use FS\Models\StandardModel;
  * Class CheckListItemAdaptor
  * @package FS\StorageAdaptors
  */
-class CheckListItemDatabaseAdaptor implements StorageAdaptor
+class CheckListItemDatabaseAdaptor
 {
     /**
      * @type object \PDO
@@ -44,8 +45,6 @@ class CheckListItemDatabaseAdaptor implements StorageAdaptor
         $list_item->setId($result["id"]);
         $list_item->setName($result["name"]);
 
-        return $this;
-
     }
 
 
@@ -55,7 +54,7 @@ class CheckListItemDatabaseAdaptor implements StorageAdaptor
      * @param StandardModel $model
      * @return null
      */
-    public function saveToStorage(StandardModel $model)
+    public function create(CheckListItem $model)
     {
         $sth = $this->dsn->prepare("INSERT INTO list_items (list_id, name) VALUES (:list_id, :name)");
         $sth->execute(
