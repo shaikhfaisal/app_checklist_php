@@ -42,6 +42,10 @@ class CheckListService
 
     }
 
+    /**
+     * @param $list_id
+     * @param $item_name
+     */
     public function removeItemFromList($list_id, $item_name)
     {
         $list = new CheckList($list_id, new CheckListDatabaseAdaptor());

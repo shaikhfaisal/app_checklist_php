@@ -34,7 +34,7 @@ class CheckListItem implements StandardModel
 
     /**
      * CheckListItem constructor.
-     * @param StorageAdaptor $db_adaptor
+     * @param CheckListItemDatabaseAdaptor $db_adaptor
      */
     public function __construct($id = null, CheckListItemDatabaseAdaptor $db_adaptor)
     {

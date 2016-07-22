@@ -101,6 +101,10 @@ class CheckListDatabaseAdaptor
 
     }
 
+    /**
+     * @param CheckList $item
+     * @param CheckListItem $list_item
+     */
     public function removeCheckListItem(CheckList $item, CheckListItem $list_item)
     {
         $sth = $this->dsn->prepare("DELETE FROM list_items WHERE id = :list_item_id");

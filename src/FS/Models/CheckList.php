@@ -97,6 +97,18 @@ class CheckList implements StandardModel
 
     }
 
+    /**
+     * @return array CheckListItem
+     */
+    public function getListItems()
+    {
+        return $this->list_items;
+    }
+
+
+    /**
+     * @param $item_name
+     */
     public function removeListItem($item_name)
     {
         /** @object  $list_item CheckListItem*/
@@ -110,14 +122,5 @@ class CheckList implements StandardModel
         }
 
     }
-
-    /**
-     * @return array CheckListItem
-     */
-    public function getListItems()
-    {
-        return $this->list_items;
-    }
-
 
 }
