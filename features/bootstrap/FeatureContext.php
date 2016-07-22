@@ -124,4 +124,27 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
     }
 
+    /**
+     * @Then I should have :arg1 in the :arg2 list
+     */
+    public function iShouldHaveInTheList($item_name, $list_name)
+    {
+
+        $list_id = $this->getIdOfList($list_name);
+
+        $sth = $this->dsn->prepare("SELECT count(1) from list_items where list_id=:list_id AND name=:item_name");
+        $sth->execute(
+            [
+                ":list_id" => $list_id,
+                ":item_name" => $item_name,
+            ]
+        );
+
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        $count = $result["count"];
+
+        assert($count > 0);
+
+    }
+
 }
