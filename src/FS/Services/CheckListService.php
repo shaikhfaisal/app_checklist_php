@@ -51,4 +51,13 @@ class CheckListService
         $list = new CheckList($list_id, new CheckListDatabaseAdaptor());
         $list->removeListItem($item_name);
     }
+
+    /**
+     * @param $list_id
+     * @return array
+     */
+    public function retrieveList($list_id)
+    {
+        return new CheckList($list_id, new CheckListDatabaseAdaptor());
+    }
 }

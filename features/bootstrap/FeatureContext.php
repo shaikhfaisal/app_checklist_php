@@ -131,19 +131,19 @@ class FeatureContext implements Context, SnippetAcceptingContext
     {
 
         $list_id = $this->getIdOfList($list_name);
+        $service = new CheckListService();
+        $no_of_matches = 0;
 
-        $sth = $this->dsn->prepare("SELECT count(1) from list_items where list_id=:list_id AND name=:item_name");
-        $sth->execute(
-            [
-                ":list_id" => $list_id,
-                ":item_name" => $item_name,
-            ]
-        );
+        /** @type \FS\Models\CheckList $check_list */
+        /** @type \FS\Models\CheckListItem $check_list_item */
+        $check_list = $service->retrieveList($list_id);
+        foreach ($check_list->getListItems() as $check_list_item) {
+            if ($check_list_item->getName() == $item_name) {
+                $no_of_matches++;
+            }
+        }
 
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-        $count = $result["count"];
-
-        assert($count > 0);
+        assert($no_of_matches > 0);
 
     }
 
