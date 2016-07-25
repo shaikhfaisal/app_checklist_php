@@ -1,21 +1,25 @@
-{
-  "name": "shaikhfaisal/package_name",
-  "description": "checklist app",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Faisal Shaikh",
-      "email": "fss.fss@gmail.com"
+  {
+    "name": "shaikhfaisal/package_name",
+    "description": "checklist app",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+      {
+        "name": "Faisal Shaikh",
+        "email": "fss.fss@gmail.com"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "FS\\": "src/FS"
+      }
+    },    
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "^3.1",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "behat/behat": "v3.1.0",
+        "phpunit/phpunit": "4.8.*"
     }
-  ],
-  "require": {
-    "behat/behat": "v3.1.0",
-    "phpunit/phpunit": "4.8.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "FS\\": "src/FS"
-    }
-  }
 }
