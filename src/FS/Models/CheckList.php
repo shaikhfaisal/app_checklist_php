@@ -117,7 +117,6 @@ class CheckList implements StandardModel
             /** @object  $list_item CheckListItem*/
             foreach ($this->getListItems() as $list_item) {
                 if ($item_name == $list_item->getName()) {
-                    print "Removing ".$list_item->getName().PHP_EOL;
                     unset($this->list_items[$list_item->getId()]);
                     $this->db_adaptor->removeCheckListItem($this, $list_item);
                     break;
