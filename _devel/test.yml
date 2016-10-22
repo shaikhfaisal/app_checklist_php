@@ -1,15 +1,66 @@
 ---
 - hosts: '{{ hosts }}'
-  sudo: yes
+  become: yes
 
   pre_tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
 
+    - name: Install additional dependencies
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - python-psycopg2
+
+    - name: Install additional tooling
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - git
+
+  vars:
+    php_packages:
+      - php7.1-fpm
+      - php7.1
+      - php7.1-cli
+      - php7.1-common
+      - php7.1-curl
+      - php7.1-intl
+      - php7.1-json
+      - php7.1-pgsql
 
   roles:
     - ansible_php
     - ansible_postgresql
     - ansible_nginx
+
+
+  tasks:
+    - name: Create postgresql database
+      become_user: postgres
+      postgresql_db:
+        #login_host: 127.0.0.1
+        login_user: postgres
+        name: checklists
+        #owner: checklists
+        
+
+    - name: Create postgresql user
+      become_user: postgres
+      postgresql_user:
+        login_user: postgres
+        db: checklists
+        name: checklists
+        password: checklists
+
+    - name: Copy sql initialisation script to /tmp
+      copy:
+        src: ../db.sql
+        dest: /tmp/db.sql
+
+    - name: Run db initialisation script
+      shell: "psql -U checklists checklists -h 127.0.0.1 < /tmp/db.sql"
+      environment:
+        PGPASSWORD: checklists
 

@@ -26,6 +26,8 @@ Vagrant.configure(2) do |config|
       "all_groups:children" => ["dev"]
     }
 
+    #ansible.verbose = [" -vvv "]
+
   end
 
 end
