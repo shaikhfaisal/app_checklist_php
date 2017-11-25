@@ -1,9 +1,8 @@
 Feature: Lists
 
-
-  Scenario: Creating a list
+  Scenario: A newly created list should have 0 items in it
     As a user
-    Given I have a list called "This is going to be an empty list"
+    When I create a list called "This is going to be an empty list"
     Then I should have 0 items in the "This is going to be an empty list" list
 
   Scenario: Adding items to a list

@@ -1,3 +1,4 @@
 .idea/
 _devel/.vagrant/
 vendor/
+logs/*

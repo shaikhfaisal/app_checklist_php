@@ -14,5 +14,13 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
+
+        // Database settings
+        'db' => [
+            'host'   => '127.0.0.1',
+            'user'   => 'checklists',
+            'pass'   => 'checklists',
+            'dbname' => 'checklists',
+        ]
     ],
 ];

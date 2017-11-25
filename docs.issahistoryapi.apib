@@ -1,0 +1,380 @@
+FORMAT: 1A
+
+# ISSA History API
+
+The API offers an overview of the consumer shopping history.
+
+Shop status: in_progress|cancelled|abandoned|completed
+
+Rescan status: in_progress|abandoned|failed|successful|invalidated
+
+Rescan type: full|partial
+
+## Statistics Collection [/statistics]
+
+### Shop [GET /statistics]
+
++ Request (application/json)
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777, 673
+            X-Scope: ROLE_STORE_MANAGER
+
++ Response 200 (application/json)
+
+        {
+            "total_count": 20,
+            "in_progress": 3,
+            "completed": 7,
+            "cancelled": 1,
+            "abandoned": 2,
+            "rescanned": 4,
+            "_links":{
+                "self":{
+                    "href":"http://api-issa-history.app.internal/statistics/shops"
+                },
+                "shops":{
+                    "href":"http://api-issa-history.app.internal/shops"
+                }
+            }
+        }
+
+# Shops Collection [/shops]
+
+### Shop Overview [GET /shops/{shopId}]
+
++ Request (application/json)
+
+    + Parameters
+
+        + shopId (required, integer, `5`) - Shop ID
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777
+            X-Scope: ROLE_STORE_MANAGER
+
++ Response 200 (application/json)
+
+        {
+           "shop_id":5,
+           "customer_id":1,
+           "store_id":69,
+           "store_name":"Harpenden",
+           "shop_started":"2016-04-28+18:02:11",
+           "shop_finished":"2016-04-28+18:21:32",
+           "shop_total_amount": 42.55,
+           "status":"shop_in_progress",
+           "selected_for_rescan":true,
+           "_embedded":{
+                "basket_items":[
+                    {
+                       "ean": "5",
+                       "shop_id": 1,
+                       "seq_id": 69,
+                       "quantity": 1,
+                       "unit_price": 1.78,
+                       "updated": "2016-04-28+18:02:11",
+                       "deleted": true,
+                        "_links":{
+                            "self":{
+                                "href":"http://shopping_history.app.internal/shops/5"
+                            },
+                            "shop": {
+                                "href": "http://api-issa-history.app.internal/shops/5"
+                            }
+                        }
+                    },
+                     {
+                       "ean": "787785",
+                       "shop_id": 1,
+                       "seq_id": 69,
+                       "quantity": 1,
+                       "unit_price": 1.78,
+                       "updated": "2016-04-28+18:02:11",
+                       "deleted": true,
+                        "_links":{
+                            "self":{
+                                "href":"http://shopping_history.app.internal/shops/5"
+                            },
+                            "shop": {
+                                "href": "http://api-issa-history.app.internal/shops/5"
+                            }
+                        }
+                    }
+                ],
+                "rescans": [
+                    {
+                        "type": "partial",
+                        "rescan_id": 1,
+                        "shop_id": 5,
+                        "status": "failed",
+                         "_links":{
+                            "self":{
+                                "href":"http://shopping_history.app.internal/shops/5"
+                            },
+                            "shop": {
+                                "href": "http://api-issa-history.app.internal/shops/5"
+                            }
+                        }
+                    },
+                    {
+                        "type": "partial",
+                        "rescan_id": 1,
+                        "shop_id": 5,
+                        "status": "failed",
+                         "_links":{
+                            "self":{
+                                "href":"http://shopping_history.app.internal/shops/5"
+                            },
+                            "shop": {
+                                "href": "http://api-issa-history.app.internal/shops/5"
+                            }
+                        }
+                    }
+                ]
+            },
+            "_links":{
+                "self": {
+                  "href": "http://api-issa-history.app.internal/shops/5"
+                },
+                "basket_items": {
+                  "href": "http://api-issa-history.app.internal/shops/5/items"
+                },
+                "rescans": {
+                  "href": "http://api-issa-history.app.internal/shops/5/rescans"
+                }
+            }
+        }
+
++ Request shop Without all the authentication headers present - missing Scope (application/json)
+
+    + Parameters
+
+        + shopId (required, integer, `5`) - Shop ID
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777
+
++ Response 401 (application/json)
+
+          {
+              "type": "https://github.com/JSainsburyPLC/issa-history-api#error-codes",
+              "detail": "Access denied",
+              "status": 404,
+              "title": "Access Denied",
+              "code": 17003
+          }
+
++ Request Missing Shop (application/json)
+
+    + Parameters
+
+        + shopId (required, integer, `99999`) - Shop ID
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777
+            X-Scope: ROLE_STORE_MANAGER
+
++ Response 404 (application/json)
+
+          {
+              "type": "https://github.com/JSainsburyPLC/issa-history-api#error-codes",
+              "detail": "Shop not found",
+              "status": 404,
+              "title": "Not Found",
+              "code": 17001
+          }
+
+### Get Shops [GET /shops?store={storeIdsArray}&users={userIdsArray}]
+
++ Request (application/json)
+
+    + Parameters
+
+        + storeIdsArray (optional, string, `777,673`) - Collection of store ids
+        + userIdsArray (optional, string, `5,8`) - Collection of user ids
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777, 673
+            X-Scope: ROLE_STORE_MANAGER
+
+
++ Response 200 (application/json)
+
+           {
+             "_links": {
+               "self": {
+                 "href": "http://api-issa-history.app.internal/shops"
+               }
+             },
+             "_embedded": {
+               "shops": [
+                 {
+                   "shop_id": 5,
+                   "customer_id": 1,
+                   "store_id": 69,
+                   "store_name": "Unknown - 69",
+                   "shop_started": "2016-04-28T18:02:11+0000",
+                   "shop_finished": "2016-04-28T18:21:32+0000",
+                   "shop_total_amount": 3.56,
+                   "status": "in_progress",
+                   "selected_for_rescan": true,
+                   "_links": {
+                     "self": {
+                       "href": "http://api-issa-history.app.internal/shops/5"
+                     },
+                     "basket_items": {
+                       "href": "http://api-issa-history.app.internal/shops/5/items"
+                     },
+                     "rescans": {
+                       "href": "http://api-issa-history.app.internal/shops/5/rescans"
+                     }
+                   },
+                   "_embedded": {
+                     "basket_items": [
+                       {
+                         "shop_id": 5,
+                         "ean": "124215",
+                         "seq_id": 69,
+                         "quantity": 1,
+                         "unit_price": 1.78,
+                         "updated": "2016-04-28T00:00:00+0000",
+                         "deleted": true,
+                         "_links": {
+                           "self": {
+                             "href": "http://api-issa-history.app.internal/shops/5/items/124215"
+                           },
+                           "shop": {
+                             "href": "http://api-issa-history.app.internal/shops/5"
+                           }
+                         }
+                       },
+                       {
+                         "shop_id": 5,
+                         "ean": "2434789",
+                         "seq_id": 69,
+                         "quantity": 1,
+                         "unit_price": 1.78,
+                         "updated": "2016-04-28T00:00:00+0000",
+                         "deleted": false,
+                         "_links": {
+                           "self": {
+                             "href": "http://api-issa-history.app.internal/shops/5/items/2434789"
+                           },
+                           "shop": {
+                             "href": "http://api-issa-history.app.internal/shops/5"
+                           }
+                         }
+                       }
+                     ],
+                     "rescans": [
+                       {
+                         "shop_id": 5,
+                         "rescan_id": 1,
+                         "status": "failed",
+                         "type": "partial",
+                         "_links": {
+                           "self": {
+                             "href": "http://api-issa-history.app.internal/shops/5/rescans/1"
+                           },
+                           "shop": {
+                             "href": "http://api-issa-history.app.internal/shops/5"
+                           }
+                         }
+                       },
+                       {
+                         "shop_id": 5,
+                         "rescan_id": 2,
+                         "status": "failed",
+                         "type": "full",
+                         "_links": {
+                           "self": {
+                             "href": "http://api-issa-history.app.internal/shops/5/rescans/2"
+                           },
+                           "shop": {
+                             "href": "http://api-issa-history.app.internal/shops/5"
+                           }
+                         }
+                       }
+                     ]
+                   }
+                 },
+                 {
+                   "shop_id": 1,
+                   "customer_id": 1,
+                   "store_id": 777,
+                   "store_name": "Harpenden",
+                   "shop_started": "2016-04-28T18:02:11+0000",
+                   "shop_finished": "2016-04-28T18:21:32+0000",
+                   "shop_total_amount": 0,
+                   "status": "abandoned",
+                   "selected_for_rescan": false,
+                   "_links": {
+                     "self": {
+                       "href": "http://api-issa-history.app.internal/shops/1"
+                     },
+                     "basket_items": {
+                       "href": "http://api-issa-history.app.internal/shops/1/items"
+                     },
+                     "rescans": {
+                       "href": "http://api-issa-history.app.internal/shops/1/rescans"
+                     }
+                   },
+                   "_embedded": {
+                     "basket_items": [],
+                     "rescans": []
+                   }
+                 }
+               ]
+             }
+           }
+
++ Request Shop Without all the authentication headers present - missing Scope, Colleague (application/json)
+
+    + Headers
+
+            X-Store: 777
+
++ Response 401 (application/json)
+
+          {
+              "type": "https://github.com/JSainsburyPLC/issa-history-api#error-codes",
+              "detail": "Access denied",
+              "status": 404,
+              "title": "Access Denied",
+              "code": 17003
+          }
+
++ Request Mismatch stores between headers and query parameters(application/json)
+
+    + Parameters
+
+        + storeIdsArray (optional, string, `99999,8888`) - Collection of store ids
+        + userIdsArray (optional, string, `5,8`) - Collection of user ids
+
+    + Headers
+
+            X-Colleague: 1
+            X-Store: 777, 673
+            X-Scope: ROLE_STORE_MANAGER
+
++ Response 401 (application/json)
+
+          {
+              "type": "https://github.com/JSainsburyPLC/issa-history-api#error-codes",
+              "detail": "There is a mismatch between the stores IDs specified in the headers and the queryParams",
+              "status": 404,
+              "title": "Access Denied",
+              "code": 17003
+          }
+

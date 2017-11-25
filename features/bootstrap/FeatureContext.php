@@ -37,6 +37,15 @@ class FeatureContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @When I create a list called :list_name
+     */
+    public function iCreateAListCalled($list_name)
+    {
+        $this->iHaveAListCalled($list_name);
+    }
+
+
+    /**
      * @Given I add :list_item_name to :list_name list
      */
     public function iAddToList($list_item_name, $list_name)

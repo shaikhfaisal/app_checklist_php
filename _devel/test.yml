@@ -11,13 +11,20 @@
       apt:
         name: "{{ item }}"
       with_items:
+        - python
         - python-psycopg2
+        - npm
 
     - name: Install additional tooling
       apt:
         name: "{{ item }}"
       with_items:
         - git
+
+#    - name: Install dredd via npm
+#      npm:
+#        name: dredd
+#        global: yes
 
   vars:
     php_packages:
